@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model BookViewModel
+
+
+@*
+    Below is how I wanted to display each book
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>ISBN</th>
+                <th>Classification</th>
+                <th>Category</th>
+                <th>Page Count</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        @foreach (Book b in Model.Books)
+        {
+    <tr>
+        <td>@b.Title</td>
+        <td>@b.Author</td>
+        <td>@b.Publisher</td>
+        <td>@b.Isbn</td>
+        <td>@b.Classification</td>
+        <td>@b.Category</td>
+        <td>@b.PageCount</td>
+        <td>@b.Price</td>
+    </tr>
+        }
+    </table>*@
+
+<!--This is how I have to display each book per the chapter-->
+@foreach (Book b in Model.Books)
+{
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <h4>
+            @b.Title
+            <!--Make price the little blue bubble-->
+            <span class="badge badge-pill badge-primary" style="float:right">
+                <small>$@b.Price</small>
+            </span>
+        </h4>
+    </div>
+    <!--List out everything else-->
+    <div class="card-text p-1">Author: @b.Author.</div>
+    <div class="card-text p-1">Publisher: @b.Publisher.</div>
+    <div class="card-text p-1">ISBN: @b.Isbn</div>
+    <div class="card-text p-1">Classification: @b.Classification</div>
+    <div class="card-text p-1">Category: @b.Category</div>
+    <div class="card-text p-1">Page Count: @b.PageCount</div>
+</div>
+}
+<div link-maker="@Model.PageDetails" page-action="Index" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
+<!--My old page links-->      
+@*<div link-maker="@Model.PageDetails" page-action="Index"></div>*@
+
