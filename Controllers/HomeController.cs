@@ -12,12 +12,13 @@ namespace Mission09_toapita.Controllers
 {
     public class HomeController : Controller
     {
+        //initialize the repo
         private IBookRepository repo; 
         
-
+        // assign book Repo to our repo
         public HomeController(IBookRepository bookRepository) => repo = bookRepository;
 
-        public IActionResult Index(int pageNum = 1)
+        public IActionResult Index(string category, int pageNum = 1)
         {
             // Set page length
             int pageLen = 10;
@@ -27,6 +28,7 @@ namespace Mission09_toapita.Controllers
             {
                 //Get books using repo
                 Books = repo.Books
+                .Where(p => p.Category == category || category == null)
                 .OrderBy(p => p.Title)
                 .Skip((pageNum - 1) * pageLen)
                 .Take(pageLen),
@@ -34,7 +36,8 @@ namespace Mission09_toapita.Controllers
                 //Set up page details
                 PageDetails = new PageDetails
                 {
-                    TotalBooks = repo.Books.Count(),
+                    TotalBooks = (category == null ? repo.Books.Count()
+                    :repo.Books.Where(x => x.Category == category).Count()),
                     BooksPerPage = pageLen,
                     CurrentPage = pageNum
                 }

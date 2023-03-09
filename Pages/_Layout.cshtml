@@ -17,17 +17,9 @@ Description: An ASP BookStore app. This app uses the repo approach, pagination, 
     <div class="bg-dark text-white p-2">
         <span class="navbar-brand ml-2">SPORTS STORE</span>
     </div>
-    <div class="row m-1 p-1">
-        <div id="categories" class="col-3">
-            <vc:categories></vc:categories>
-        </div>
-        <div class="col-9">
-            @RenderBody()
-        </div>
+
+    <div>
+        @RenderBody()
     </div>
-    <!--Added a copyright footer at the bottom with bolded, centered, muted text.-->
-    <footer class="text-center border-top">
-        <div class="text-center text-muted fw-bold">Copyright &copy; BookRUs</div>
-    </footer>
 </body>
 </html>

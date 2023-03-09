@@ -35,6 +35,9 @@ namespace Mission09_toapita
             });
 
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,16 +56,29 @@ namespace Mission09_toapita
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //Use session
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+
+                //Map some endpoints
+                endpoints.MapControllerRoute("PageAndCategory", "{category}/{pageNum}", new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute("Paging", "{pageNum}", new { Controller = "Home", action = "Index", pageNum = 1});
+
+                endpoints.MapControllerRoute("Category", "{category}", new { Controller = "Home", action = "Index", pageNum = 1});
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }
