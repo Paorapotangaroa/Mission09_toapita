@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace Mission09_toapita.Models
     {
         //It can contain mutiple items so we use a list
         public List<BookItem> Items { get; set; } = new List<BookItem>();
-        public void AddItem(Book book, int qty)
+        public virtual void AddItem(Book book, int qty)
         {
             //Check if our item is in the list
             BookItem Item =
@@ -32,6 +33,16 @@ namespace Mission09_toapita.Models
                 Item.Quantity += qty;
             }
         }
+
+        public virtual void RemoveItem(Book book)
+        {
+            Items.RemoveAll(x => x.Book.BookId == book.BookId);
+        }
+
+        public virtual void ClearCart()
+        {
+            Items.Clear();
+        } 
         public double CalcTotal()
         {
             //Sum up the quantity times price for each book
@@ -43,6 +54,8 @@ namespace Mission09_toapita.Models
     //Class for line items(Basically just storing what info we need for each line in the list)
     public class BookItem
     {
+        [Key]
+        [Required]
         public int LineID { get; set; }
         public Book Book { get; set; }
         public int Quantity { get; set; }

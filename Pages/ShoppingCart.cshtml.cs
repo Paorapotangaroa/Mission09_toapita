@@ -15,30 +15,34 @@ namespace Mission09_toapita.Pages
         public Cart ShoppingCart { get; set; }
         public string ReturnUrl { get; set; }
 
-        public ShoppingCartModel(IBookRepository temp)
+        public ShoppingCartModel(IBookRepository temp, Cart c)
         {
             repo = temp;
+            ShoppingCart = c;
 
         }
         public void OnGet(string returnUrl)
         {
             //Render the page using the shopping cart
             ReturnUrl = returnUrl ?? "/";
-            ShoppingCart = HttpContext.Session.GetJson<Cart>("cart")??new Cart();
+            
         }
 
         public IActionResult OnPost(int bookId, string returnUrl)
         {
             //Get a book using the repo based on book id, either initialize a cart or use JSON to create it
             Book b = repo.Books.FirstOrDefault(x => x.BookId == bookId);
-            ShoppingCart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
 
             //Add the item and update the JSON
             ShoppingCart.AddItem(b, 1);
 
-            HttpContext.Session.SetJson("cart", ShoppingCart);
-
             //Redirect
+            return RedirectToPage(new { ReturnUrl = returnUrl });
+        }
+
+        public IActionResult OnPostRemove(int bookId, string returnUrl)
+        {
+            ShoppingCart.RemoveItem(ShoppingCart.Items.First(x => x.Book.BookId == bookId).Book);
             return RedirectToPage(new { ReturnUrl = returnUrl });
         }
     }

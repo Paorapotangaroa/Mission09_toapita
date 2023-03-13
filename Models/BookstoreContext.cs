@@ -20,6 +20,7 @@ namespace Mission09_toapita.Models
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
     }
 }
