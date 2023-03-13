@@ -14,19 +14,23 @@ namespace Mission09_toapita.Pages
         private IBookRepository repo { get; set; }
         public Cart ShoppingCart { get; set; }
         public string ReturnUrl { get; set; }
-
+        //In the constructor create the repo and shopping cart.
         public ShoppingCartModel(IBookRepository temp, Cart c)
         {
             repo = temp;
             ShoppingCart = c;
 
         }
+
+        //This is how you get to the page and how it knows what page to return you to.
         public void OnGet(string returnUrl)
         {
             //Render the page using the shopping cart
             ReturnUrl = returnUrl ?? "/";
             
         }
+
+        //When the page posts add an item.
 
         public IActionResult OnPost(int bookId, string returnUrl)
         {
@@ -39,7 +43,7 @@ namespace Mission09_toapita.Pages
             //Redirect
             return RedirectToPage(new { ReturnUrl = returnUrl });
         }
-
+        //Allow the user to remove items
         public IActionResult OnPostRemove(int bookId, string returnUrl)
         {
             ShoppingCart.RemoveItem(ShoppingCart.Items.First(x => x.Book.BookId == bookId).Book);

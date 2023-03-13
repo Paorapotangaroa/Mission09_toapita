@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mission09_toapita.Models
 {
+    // Adding a purchase model so that it can be recorded in the database
     public class Purchase
     {
         [Key]

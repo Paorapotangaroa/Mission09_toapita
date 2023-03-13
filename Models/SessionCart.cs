@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mission09_toapita.Models
 {
+    //A cart with references to a session. We are suing static methods to get the cart and overriding some methods from Cart.
     public class SessionCart: Cart
     {
         public static Cart GetCart(IServiceProvider services)

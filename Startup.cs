@@ -35,7 +35,7 @@ namespace Mission09_toapita
                 options.UseSqlite(Configuration["ConnectionStrings:MainConnection"]);
             });
 
-
+            //Add the appropriate services
             services.AddScoped<Cart>(x => SessionCart.GetCart(x));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBookRepository, BookRepository>();
